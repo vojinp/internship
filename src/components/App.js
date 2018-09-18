@@ -1,5 +1,5 @@
-import React from 'react'
-import { Component } from 'react'
+import React from 'react';
+import { Component } from 'react';
 import { TODOItem } from './TODOItem';
 import { NewItemModal } from './NewItemModal';
 import quotes from '../data/quotes.json';
@@ -8,7 +8,9 @@ export class App extends Component {
     constructor(props) {
         super(props);
         this.ranodmQuote = quotes[Math.floor(Math.random() * quotes.length)];
-        this.removeItem = this.removeItem.bind(this);
+        this.state = {
+          modalActive : false
+        };
         this.items = [
             {
                 id: 0,
@@ -23,6 +25,9 @@ export class App extends Component {
                 name: 'Drink beer'
             }
         ];
+        this.removeItem = this.removeItem.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.addItem = this.addItem.bind(this);
     }
 
     removeItem(itemsId) {
@@ -38,6 +43,25 @@ export class App extends Component {
         }, 1000)
     }
 
+    toggleModal() {
+      this.setState({
+        modalActive: !this.state.modalActive
+      });
+    }
+    addItem(item) {
+      item.id = this.generateId();
+      this.items.push(item);
+      this.forceUpdate()
+    }
+
+    generateId() {
+      let biggestId = this.items.length === 0 ? 0 : this.items[0].id;
+      for (let item of this.items)
+        if (item.id > biggestId)
+          biggestId = item.id;
+      return ++biggestId;
+    }
+
     render() {
         return (
             <div className="page-wrap">
@@ -45,7 +69,7 @@ export class App extends Component {
               <header className="header">
                 <div className="wrap">
                   <span className="btn-icon">
-                    <img className="icon icon-plus js-modal-init" src="icons/icon-plus.svg" alt="Add New Item" />
+                    <img onClick={this.toggleModal} className="icon icon-plus js-modal-init" src="icons/icon-plus.svg" alt="Add New Item" />
                   </span>
                   <div className="header-blockquote">
                     <h1 className="header-quote">{ this.ranodmQuote.quote }</h1>
@@ -70,7 +94,9 @@ export class App extends Component {
 						                {...item}/>	)}
                 </div>
               </main>
-              <NewItemModal />
+              <NewItemModal active = {this.state.modalActive}
+                            closeModal = {this.toggleModal}
+                            addItem = {this.addItem}/>
               {/* footer */}
               <footer className="footer">
                 <div className="wrap">
