@@ -1,20 +1,16 @@
-import PropTypes from 'prop-types';
-
-export const TODOItem = ({
+const TODOItem = ({
     id,
     name,
-    checked}) => {
+    onRemoveItem
+    }
+) => {
 
-        const check = () => {
-            checked(id);
-        }
-        
-        return (
+    return (
         <div className="item-row">
             <label className="check-flag">
             <span className="check-flag-label">{ name }</span>
             <span className="checkbox">
-                <input className="checkbox-native" type="checkbox" onChange={check}/>
+                <input className="checkbox-native" type="checkbox" onChange={onRemoveItem.bind(this, id)}/>
                 <span className="checkmark">
                 <svg viewBox="0 0 24 24">
                     <path className="checkmark-icon" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
@@ -22,11 +18,9 @@ export const TODOItem = ({
                 </span>
             </span>
             </label>
-        </div>)
-}
+        </div>
+    )
+};
 
-TODOItem.propTypes = {
-    name: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+export default TODOItem;
 
-}

@@ -1,0 +1,10 @@
+const constants = {
+	ADD_ITEM: "ADD_ITEM",
+	REMOVE_ITEM: "REMOVE_ITEM",
+	TOGGLE_MODAL: "TOGGLE_MODAL",
+	SET_DATE: "SET_DATE",
+	CHANGE_NAME: "CHANGE_NAME",
+	CLEAR_NAME: "CLEAR_NAME"
+};
+
+export default constants;
