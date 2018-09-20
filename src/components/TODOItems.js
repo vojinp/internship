@@ -4,7 +4,6 @@ const TODOItems = ({
     items,
     onRemoveItem
 }) => {
-    console.log(items);
     return (
         <main className="main">
             <div className="wrap">
